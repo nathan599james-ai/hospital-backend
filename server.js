@@ -1,20 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import pg from 'pg';
 import dotenv from 'dotenv';
+import pool from './db.js'; // Imports the secure database connection we configured earlier
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json()); // Parses incoming json payloads
-
-// Pool manager handles structural concurrent connections to PostgreSQL cloud node
-const { Pool } = pg;
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false } // Required for cloud hosting secure validation
-});
 
 // Database Initialization Routine
 const initDb = async () => {
